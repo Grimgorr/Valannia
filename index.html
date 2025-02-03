@@ -1,212 +1,226 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafting Tree</title>
+    <title>Crafteo por Categorías</title>
     <style>
+        :root {
+            --category-bg: #2c3e50;
+            --item-bg: #34495e;
+            --hover-color: #3498db;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #757575 ;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ecf0f1;
         }
-        h1 {
-            text-align: center;
+
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+
         .category {
-            margin: 10px;
+            background: var(--category-bg);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--hover-color);
+        }
+
+        .craft-item {
+            background: var(--item-bg);
+            margin: 5px 0;
             padding: 10px;
-            border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .category:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        .craft-item:hover {
+            background: var(--hover-color);
+            transform: translateX(10px);
         }
-        select, button {
-            margin-top: 10px;
-            padding: 5px;
-            font-size: 14px;
+
+        .item-image {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
         }
-        .details {
-            margin-top: 20px;
+
+        .crafting-tree {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tree-node {
+            margin: 10px 0;
             padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            border-radius: 5px;
+            border-left: 3px solid var(--hover-color);
         }
-.centered-logo {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
+
+        .material {
+            color: #27ae60;
+            margin-left: 20px;
         }
-        .centered-logo img {
-            max-width: 300px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-.logo {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-width: 300px;
-            height: auto;
-            margin-bottom: 10px;
+
+        .component {
+            color: #2980b9;
         }
     </style>
 </head>
 <body>
-  <div class="centered-logo">
-<a href="https://market.valannia.com/"><img src="https://i.ibb.co/hLLyvWH/f97d5bb61b72da7e1e96.png" alt="f97d5bb61b72da7e1e96" border="0"></a>
-  
-            <img src="https://i.ibb.co/XYdQpbn/road-to-realms-logo.webp" alt="road-to-realms-logo" border="0">
-        </a>
+    <div class="categories-container">
+        <!-- Categoría Exploración -->
+        <div class="category">
+            <div class="category-title">🛠️ Exploración</div>
+            <div class="craft-item" data-item="binoculares">
+                <img src="binoculars.png" class="item-image">
+                Binoculares
+            </div>
+            <div class="craft-item" data-item="mapa">
+                <img src="map.png" class="item-image">
+                Mapa
+            </div>
+            <div class="craft-item" data-item="kit_supervivencia">
+                <img src="survival_kit.png" class="item-image">
+                Kit de Supervivencia
+            </div>
+        </div>
+
+        <!-- Categoría Blacksmith -->
+        <div class="category">
+            <div class="category-title">🔥 Blacksmith</div>
+            <div class="craft-item" data-item="espada_hierro">
+                <img src="iron_sword.png" class="item-image">
+                Espada de Hierro
+            </div>
+            <div class="craft-item" data-item="hacha_acero">
+                <img src="steel_axe.png" class="item-image">
+                Hacha de Acero
+            </div>
+            <div class="craft-item" data-item="escudo">
+                <img src="shield.png" class="item-image">
+                Escudo Reforzado
+            </div>
+            <div class="craft-item" data-item="armadura">
+                <img src="armor.png" class="item-image">
+                Armadura Completa
+            </div>
+            <div class="craft-item" data-item="cadena">
+                <img src="chain.png" class="item-image">
+                Cadena de Acero
+            </div>
+            <div class="craft-item" data-item="yunque">
+                <img src="anvil.png" class="item-image">
+                Yunque Pesado
+            </div>
+            <div class="craft-item" data-item="martillo">
+                <img src="hammer.png" class="item-image">
+                Martillo de Forja
+            </div>
+            <div class="craft-item" data-item="clavo">
+                <img src="nail.png" class="item-image">
+                Clavos de Metal
+            </div>
+        </div>
     </div>
- 
-    <div class="container" id="categories"></div>
-    <div class="details" id="details">
-        <strong>Select an item to see its crafting details.</strong>
+
+    <div class="crafting-tree" id="craftingTree">
+        <!-- Aquí se mostrará el árbol de crafteo seleccionado -->
     </div>
+
     <script>
-        const data = [
-{category: "Exploration", object: "Blueprint Map", item: "Woodland Map Richness 1", quantity: 1, probability: "8.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Woodland Map Richness 2", quantity: 1, probability: "6.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Woodland Map Richness 3", quantity: 1, probability: "5.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Woodland Map Richness 4", quantity: 1, probability: "4.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Woodland Map Richness 5", quantity: 1, probability: "3.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Well Map Richness 1", quantity: 1, probability: "8.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Well Map Richness 2", quantity: 1, probability: "6.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Well Map Richness 3", quantity: 1, probability: "5.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Well Map Richness 4", quantity: 1, probability: "4.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Well Map Richness 5", quantity: 1, probability: "3.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Copper Vein Map Richness 1", quantity: 1, probability: "8.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Copper Vein Map Richness 2", quantity: 1, probability: "6.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Copper Vein Map Richness 3", quantity: 1, probability: "5.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Copper Vein Map Richness 4", quantity: 1, probability: "4.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Copper Vein Map Richness 5", quantity: 1, probability: "3.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Abandoned Camp Map Richness 1", quantity: 1, probability: "8.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Abandoned Camp Map Richness 2", quantity: 1, probability: "6.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Abandoned Camp Map Richness 3", quantity: 1, probability: "5.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Abandoned Camp Map Richness 4", quantity: 1, probability: "4.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Exploration", object: "Blueprint Map", item: "Abandoned Camp Map Richness 5", quantity: 1, probability: "3.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Blacksmith", object: "Axe", item: "Axe", quantity: 1, probability: "100.00%", materials: [{name: "Softwood Handle", qty: 1}, {name: "Cloth Tool Grip", qty: 1}, {name: "Copper Ingot", qty: 1}, {name: "Axe Blueprint", qty: 1}], time: 60},
-{category: "Blacksmith", object: "Shovel", item: "Shovel", quantity: 1, probability: "100.00%", materials: [{name: "Softwood Handle", qty: 1}, {name: "Cloth Tool Grip", qty: 1}, {name: "Copper Ingot", qty: 1}, {name: "Shovel Blueprint", qty: 1}], time: 60},
-{category: "Blacksmith", object: "Pickaxe", item: "Pickaxe", quantity: 1, probability: "100.00%", materials: [{name: "Softwood Handle", qty: 1}, {name: "Cloth Tool Grip", qty: 1}, {name: "Copper Ingot", qty: 1}, {name: "Pickaxe Blueprint", qty: 1}], time: 60},
-{category: "Blacksmith", object: "Bucket", item: "Bucket", quantity: 1, probability: "100.00%", materials: [{name: "Softwood", qty: 1}, {name: "Softwood Fibers", qty: 1}, {name: "Copper Ingot", qty: 1}, {name: "Bucket Blueprint", qty: 1}], time: 60},
-{category: "Blacksmith", object: "Copper Ingot", item: "Copper Ingot", quantity: 1, probability: "100.00%", materials: [{name: "Copper Ore", qty: 1}, {name: "Water", qty: 1}, {name: "Charcoal", qty: 1}], time: 60},
-{category: "Architecture", object: "Copper Brace", item: "Copper Brace", quantity: 1, probability: "100.00%", materials: [{name: "Copper Ingot", qty: 1}, {name: "Copper Brace Blueprint", qty: 1}], time: 60},
-{category: "Architecture", object: "Copper Hinge", item: "Copper Hinge", quantity: 1, probability: "100.00%", materials: [{name: "Copper Ingot", qty: 1}, {name: "Copper Hinge Blueprint", qty: 1}], time: 60},
-{category: "Architecture", object: "Softwood Beam", item: "Softwood Beam", quantity: 1, probability: "100.00%", materials: [{name: "Softwood Fibers", qty: 2}, {name: "Softwood", qty: 1}], time: 60},
-{category: "Engineering", object: "Objet Blueprint", item: "Axe Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Shovel Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Pickaxe Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Bucket Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Cloth Tool Grip Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Softwood Handle Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Copper Hinge Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Objet Blueprint", item: "Copper Brace Blueprint", quantity: 1, probability: "13.00%", materials: [{name: "Paper", qty: 1}], time: 180},
-{category: "Engineering", object: "Softwood Handle", item: "Softwood Handle", quantity: 1, probability: "100.00%", materials: [{name: "Softwood", qty: 1}, {name: "Softwood Handle Blueprint", qty: 1}], time: 60},
-{category: "Engineering", object: "Cloth Tool Grip", item: "Cloth Tool Grip", quantity: 1, probability: "100.00%", materials: [{name: "Cloth Tool Grip Blueprint", qty: 1}, {name: "Cloth", qty: 1}], time: 60},
-{category: "Engineering", object: "Nail", item: "Nail", quantity: 4, probability: "100.00%", materials: [{name: "Copper Ingot", qty: 1}], time: 60},
-{category: "Mining", object: "Copper Ore", item: "Copper Ore", quantity: "15 - 18", probability: "100.00%", materials: [{name: "Copper Vein", qty: "15 - 18"}, {name: "Pickaxe", qty: 1}], time: 120},
-{category: "Mining", object: "Charcoal", item: "Charcoal", quantity: "15 - 18", probability: "100.00%", materials: [{name: "Abandoned Camp", qty: "15 - 18"}, {name: "Shovel", qty: 1}], time: 120},
-{category: "Mining", object: "Water", item: "Water", quantity: "15 - 18", probability: "100.00%", materials: [{name: "Well", qty: "15 - 18"}, {name: "Bucket", qty: 1}], time: 120},
-{category: "Artisan", object: "Softwood - Softwood Fiber", item: "Softwood", quantity: "15 - 18", item1: "Softwood Fiber", quantity1: "15 - 18", probability: "50.00% each", materials: [{name: "Woodlands", qty: "15 - 18"}, {name: "Axe", qty: "1"}], time: 120},
-          {category: "Artisan", object: "Paper", item: "Paper", quantity: 3, probability: "100.00%", materials: [{name: "Softtwood", qty: 1}, {name: "Water", qty: 1}], time: 60},
-{category: "Artisan", object: "Cloth", item: "Cloth", quantity: 1, probability: "100.00%", materials: [{name: "Softtwood Fibers", qty: 4}], time: 1},
-{category: "Alchemy", object: "No Material", item: "Loose Materials 10%", quantity: 1, probability: "10.00%", materials: [{name: "Paper", qty: 1}, {name: "Copper Ore", qty: 1}, {name: "Water", qty: 1}, {name: "Charcoal", qty: 1}], time: 1440},
-{category: "Alchemy", object: "Iron Ore 100%, Coal 100%, Stormwater 100%", item: "Superior Materials 20%", quantity: 1, probability: "20.00%", materials: [{name: "Paper", qty: 1}, {name: "Copper Ore", qty: 1}, {name: "Water", qty: 1}, {name: "Charcoal", qty: 1}], time: 1440},
-{category: "Alchemy", object: "Copper Ore 100%, Charcoal 100%, Water 100%", item: "Same Materials 40%", quantity: 1, probability: "40.00%", materials: [{name: "Paper", qty: 1}, {name: "Copper Ore", qty: 1}, {name: "Water", qty: 1}, {name: "Charcoal", qty: 1}], time: 1440},
-{category: "Alchemy", object: "Liquid Honey Drop 20%, Natron 20%, Limestone 20%, Liquid Valannite 20%, Glass 20%", item: "Special Materials 30%", quantity: 1, probability: "30.00%", materials: [{name: "Paper", qty: 1}, {name: "Copper Ore", qty: 1}, {name: "Water", qty: 1}, {name: "Charcoal", qty: 1}], time: 1440},
-{category: "Jewelry", object: "Processed Valannite", item: "Processed Valannite", quantity: 1, probability: "100.00%", materials: [{name: "Charcoal", qty: 3}, {name: "Liquid Valannite", qty: 1}, {name: "Valannite", qty: 1}], time: 60},
-{category: "Jewelry", object: "Honey Drop", item: "Honey Drop", quantity: 1, probability: "100.00%", materials: [{name: "Processed Valannite", qty: 2}, {name: "Natron", qty: 1}], time: 60},
+        // Base de datos de crafteos
+        const craftingRecipes = {
+            // Exploración
+            binoculares: {
+                materiales: [
+                    { tipo: 'raw', nombre: 'vidrio', cantidad: 2 },
+                    { tipo: 'componente', nombre: 'marco_metalico', cantidad: 1 },
+                    { tipo: 'raw', nombre: 'cuero', cantidad: 1 }
+                ]
+            },
+            mapa: {
+                materiales: [
+                    { tipo: 'raw', nombre: 'papel', cantidad: 3 },
+                    { tipo: 'componente', nombre: 'tinta', cantidad: 1 }
+                ]
+            },
+            
+            // Blacksmith
+            espada_hierro: {
+                materiales: [
+                    { tipo: 'componente', nombre: 'lingote_hierro', cantidad: 3 },
+                    { tipo: 'componente', nombre: 'empuñadura', cantidad: 1 },
+                    { tipo: 'raw', nombre: 'carbon', cantidad: 5 }
+                ]
+            },
+            hacha_acero: {
+                materiales: [
+                    { tipo: 'componente', nombre: 'lingote_acero', cantidad: 2 },
+                    { tipo: 'componente', nombre: 'mango_roble', cantidad: 1 },
+                    { tipo: 'raw', nombre: 'cuero', cantidad: 2 }
+                ]
+            }
+        };
 
+        // Función para mostrar el árbol de crafteo
+        function showCraftingTree(itemId) {
+            const treeContainer = document.getElementById('craftingTree');
+            treeContainer.innerHTML = `<h3>Receta para ${itemId}:</h3>`;
+            
+            const recipe = craftingRecipes[itemId];
+            if (!recipe) return;
 
-
-
-
-
-
-
-
-
-
-
-
-            // Add more data as needed
-        ];
-const categoriesContainer = document.getElementById("categories");
-        const detailsContainer = document.getElementById("details");
-
-        // Obtener las categorías únicas
-        const categories = [...new Set(data.map(item => item.category))];
-
-        // Iterar sobre cada categoría
-        categories.forEach(category => {
-            const categoryDiv = document.createElement("div");
-            categoryDiv.className = "category";
-
-            // Crear el título <h3> para la categoría
-            const categoryTitle = document.createElement("h3");
-            categoryTitle.textContent = category;
-            categoryDiv.appendChild(categoryTitle);  // Añadimos el título al div de la categoría
-
-            // Crear el <select> para la categoría
-            const select = document.createElement("select");
-            select.innerHTML = `<option value="">Select ${category}</option>`;
-
-            // Filtrar los elementos de la categoría y añadirlos al <select>
-            data.filter(item => item.category === category).forEach(item => {
-                const option = document.createElement("option");
-                option.value = item.item;
-                option.textContent = item.item;
-                select.appendChild(option);
-            });
-
-            // Agregar el evento al <select> para mostrar los detalles
-            select.addEventListener("change", (e) => {
-                const selectedItem = data.find(item => item.item === e.target.value);
-                if (selectedItem) {
-                    const materialsList = selectedItem.materials.map(material => `<li>${material.qty} x ${material.name}</li>`).join("");
-                    detailsContainer.innerHTML = `
-                        <h2>${selectedItem.item}</h2>
-                        <p><strong>Category:</strong> ${selectedItem.category}</p>
-                        <p><strong>Object:</strong> ${selectedItem.object}</p>
-                        <p><strong>Quantity:</strong> ${selectedItem.quantity}</p>
-                        <p><strong>Probability:</strong> ${selectedItem.probability}</p>
-                        <p><strong>Materials required:</strong></p>
-                        <ul>${materialsList}</ul>
-                        <p><strong>Crafting Time:</strong> ${selectedItem.time} Minutes</p>
-                    `;
-                } else {
-                    detailsContainer.innerHTML = `<strong>Select an item to see its crafting details.</strong>`;
+            recipe.materiales.forEach(material => {
+                const node = document.createElement('div');
+                node.className = `tree-node ${material.tipo}`;
+                node.innerHTML = `
+                    ${material.nombre} 
+                    <span class="quantity">(x${material.cantidad})</span>
+                    ${material.tipo === 'componente' ? '➔' : ''}
+                `;
+                
+                if (material.tipo === 'componente') {
+                    node.addEventListener('click', () => showCraftingTree(material.nombre));
+                    node.style.cursor = 'pointer';
                 }
+                
+                treeContainer.appendChild(node);
             });
+        }
 
-            categoryDiv.appendChild(select);  // Añadir el <select> al div de la categoría
-            categoriesContainer.appendChild(categoryDiv);  // Añadir el div al contenedor de categorías
+        // Event listeners para los items
+        document.querySelectorAll('.craft-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remover selección previa
+                document.querySelectorAll('.craft-item').forEach(i => 
+                    i.style.background = var(--item-bg));
+                
+                // Resaltar selección actual
+                item.style.background = var(--hover-color);
+                
+                // Mostrar árbol de crafteo
+                const itemId = item.dataset.item;
+                showCraftingTree(itemId);
+            });
         });
     </script>
-<div class="container" style="text-align: center;">
-    <div class="logo">
-            <img src="https://i.ibb.co/RBwJQcn/LOGO-LMR-neon6.png" alt="LOGO-LMR-neon6" border="0" style="max-width: 30%; height: auto;">
-        </a>
-    </div>
-</div>
-
-        </div></body>
+</body>
 </html>
-
