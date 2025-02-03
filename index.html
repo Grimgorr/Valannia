@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Crafteo por Categorías</title>
+    <title>Crafteo por Categorías Desplegables</title>
     <style>
         :root {
             --category-bg: #2c3e50;
             --item-bg: #34495e;
             --hover-color: #3498db;
+            --active-color: #2980b9;
         }
 
         body {
@@ -16,32 +17,49 @@
             background-color: #ecf0f1;
         }
 
-        .categories-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
         .category {
             background: var(--category-bg);
             border-radius: 10px;
-            padding: 15px;
-            color: white;
+            margin-bottom: 15px;
+            overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .category-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--hover-color);
+        .category-header {
+            padding: 15px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .category-header:hover {
+            background: var(--hover-color);
+        }
+
+        .category-header.active {
+            background: var(--active-color);
+        }
+
+        .category-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .category-items.open {
+            max-height: 500px;
         }
 
         .craft-item {
             background: var(--item-bg);
-            margin: 5px 0;
+            margin: 5px;
             padding: 10px;
             border-radius: 5px;
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -54,24 +72,22 @@
             transform: translateX(10px);
         }
 
+        .craft-item.active {
+            background: var(--active-color);
+        }
+
         .item-image {
             width: 32px;
             height: 32px;
             object-fit: contain;
         }
 
-        .crafting-tree {
+        .crafting-info {
             margin-top: 30px;
             padding: 20px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .tree-node {
-            margin: 10px 0;
-            padding: 10px;
-            border-left: 3px solid var(--hover-color);
         }
 
         .material {
@@ -81,14 +97,27 @@
 
         .component {
             color: #2980b9;
+            cursor: pointer;
+        }
+
+        .quantity {
+            margin-left: auto;
+            background: white;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <div class="categories-container">
-        <!-- Categoría Exploración -->
-        <div class="category">
-            <div class="category-title">🛠️ Exploración</div>
+    <!-- Categoría Exploración -->
+    <div class="category">
+        <div class="category-header" onclick="toggleCategory(this)">
+            🛠️ Exploración
+            <span class="arrow">▼</span>
+        </div>
+        <div class="category-items">
             <div class="craft-item" data-item="binoculares">
                 <img src="binoculars.png" class="item-image">
                 Binoculares
@@ -102,10 +131,15 @@
                 Kit de Supervivencia
             </div>
         </div>
+    </div>
 
-        <!-- Categoría Blacksmith -->
-        <div class="category">
-            <div class="category-title">🔥 Blacksmith</div>
+    <!-- Categoría Blacksmith -->
+    <div class="category">
+        <div class="category-header" onclick="toggleCategory(this)">
+            🔥 Blacksmith
+            <span class="arrow">▼</span>
+        </div>
+        <div class="category-items">
             <div class="craft-item" data-item="espada_hierro">
                 <img src="iron_sword.png" class="item-image">
                 Espada de Hierro
@@ -122,105 +156,97 @@
                 <img src="armor.png" class="item-image">
                 Armadura Completa
             </div>
-            <div class="craft-item" data-item="cadena">
-                <img src="chain.png" class="item-image">
-                Cadena de Acero
-            </div>
-            <div class="craft-item" data-item="yunque">
-                <img src="anvil.png" class="item-image">
-                Yunque Pesado
-            </div>
-            <div class="craft-item" data-item="martillo">
-                <img src="hammer.png" class="item-image">
-                Martillo de Forja
-            </div>
-            <div class="craft-item" data-item="clavo">
-                <img src="nail.png" class="item-image">
-                Clavos de Metal
-            </div>
         </div>
     </div>
 
-    <div class="crafting-tree" id="craftingTree">
-        <!-- Aquí se mostrará el árbol de crafteo seleccionado -->
+    <!-- Información de Crafteo -->
+    <div class="crafting-info" id="craftingInfo">
+        Selecciona un item para ver su receta de crafteo
     </div>
 
     <script>
         // Base de datos de crafteos
         const craftingRecipes = {
-            // Exploración
             binoculares: {
                 materiales: [
                     { tipo: 'raw', nombre: 'vidrio', cantidad: 2 },
                     { tipo: 'componente', nombre: 'marco_metalico', cantidad: 1 },
                     { tipo: 'raw', nombre: 'cuero', cantidad: 1 }
-                ]
+                ],
+                tiempo: "15 min",
+                dificultad: "Media"
             },
-            mapa: {
-                materiales: [
-                    { tipo: 'raw', nombre: 'papel', cantidad: 3 },
-                    { tipo: 'componente', nombre: 'tinta', cantidad: 1 }
-                ]
-            },
-            
-            // Blacksmith
             espada_hierro: {
                 materiales: [
                     { tipo: 'componente', nombre: 'lingote_hierro', cantidad: 3 },
                     { tipo: 'componente', nombre: 'empuñadura', cantidad: 1 },
                     { tipo: 'raw', nombre: 'carbon', cantidad: 5 }
-                ]
+                ],
+                tiempo: "30 min",
+                dificultad: "Alta"
             },
-            hacha_acero: {
-                materiales: [
-                    { tipo: 'componente', nombre: 'lingote_acero', cantidad: 2 },
-                    { tipo: 'componente', nombre: 'mango_roble', cantidad: 1 },
-                    { tipo: 'raw', nombre: 'cuero', cantidad: 2 }
-                ]
-            }
+            // ... más recetas
         };
 
-        // Función para mostrar el árbol de crafteo
-        function showCraftingTree(itemId) {
-            const treeContainer = document.getElementById('craftingTree');
-            treeContainer.innerHTML = `<h3>Receta para ${itemId}:</h3>`;
-            
-            const recipe = craftingRecipes[itemId];
-            if (!recipe) return;
+        // Función para mostrar/ocultar categorías
+        function toggleCategory(header) {
+            const category = header.parentElement;
+            const items = category.querySelector('.category-items');
+            const arrow = header.querySelector('.arrow');
 
-            recipe.materiales.forEach(material => {
-                const node = document.createElement('div');
-                node.className = `tree-node ${material.tipo}`;
-                node.innerHTML = `
-                    ${material.nombre} 
-                    <span class="quantity">(x${material.cantidad})</span>
-                    ${material.tipo === 'componente' ? '➔' : ''}
-                `;
-                
-                if (material.tipo === 'componente') {
-                    node.addEventListener('click', () => showCraftingTree(material.nombre));
-                    node.style.cursor = 'pointer';
-                }
-                
-                treeContainer.appendChild(node);
-            });
+            category.classList.toggle('open');
+            items.classList.toggle('open');
+            arrow.textContent = category.classList.contains('open') ? '▲' : '▼';
+        }
+
+        // Función para mostrar la información de crafteo
+        function showCraftingInfo(itemId) {
+            const infoContainer = document.getElementById('craftingInfo');
+            const recipe = craftingRecipes[itemId];
+
+            if (!recipe) {
+                infoContainer.innerHTML = `<p>No hay información disponible para ${itemId}</p>`;
+                return;
+            }
+
+            let materialsHTML = recipe.materiales.map(material => `
+                <div class="tree-node ${material.tipo}">
+                    ${material.nombre}
+                    <span class="quantity">x${material.cantidad}</span>
+                </div>
+            `).join('');
+
+            infoContainer.innerHTML = `
+                <h3>Receta para ${itemId}</h3>
+                <div class="recipe-details">
+                    <p><strong>Tiempo:</strong> ${recipe.tiempo}</p>
+                    <p><strong>Dificultad:</strong> ${recipe.dificultad}</p>
+                    <h4>Materiales requeridos:</h4>
+                    ${materialsHTML}
+                </div>
+            `;
         }
 
         // Event listeners para los items
         document.querySelectorAll('.craft-item').forEach(item => {
-            item.addEventListener('click', () => {
+            item.addEventListener('click', function() {
                 // Remover selección previa
                 document.querySelectorAll('.craft-item').forEach(i => 
-                    i.style.background = var(--item-bg));
+                    i.classList.remove('active'));
                 
                 // Resaltar selección actual
-                item.style.background = var(--hover-color);
+                this.classList.add('active');
                 
-                // Mostrar árbol de crafteo
-                const itemId = item.dataset.item;
-                showCraftingTree(itemId);
+                // Mostrar información de crafteo
+                const itemId = this.dataset.item;
+                showCraftingInfo(itemId);
             });
         });
+
+        // Abrir la primera categoría por defecto
+        document.querySelector('.category').classList.add('open');
+        document.querySelector('.category .category-items').classList.add('open');
+        document.querySelector('.category .arrow').textContent = '▲';
     </script>
 </body>
 </html>
